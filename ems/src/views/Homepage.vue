@@ -1,7 +1,8 @@
 <template>
-    <el-row class="tac">
+
+    <el-row >
         <el-col :span="4">
-            <h5>员工管理系统</h5>
+
             <el-menu
                     :uniqueOpened="true"
                     default-active="2"
@@ -13,23 +14,29 @@
                     active-text-color="#ffd04b">
                 <el-menu-item index="1">
                     <i class="el-icon-menu"></i>
-                    <template #title>主页</template>
+                    <template #title><router-link :to="{path: '/SubHomePage'}">
+                        主页
+                    </router-link></template>
                 </el-menu-item>
 
 
 
                 <el-submenu index="2">
                     <template #title>
-                        <i class="el-icon-location"></i>
+                        <i class="el-icon-menu"></i>
                         <span>请假</span>
                     </template>
                     <el-menu-item-group>
                         <template #title>分组一</template>
-                        <el-menu-item index="2-1">请假申请</el-menu-item>
-                        <el-menu-item index="2-2" router-link = ''>审核状态</el-menu-item>
-                    </el-menu-item-group>
-                    <el-menu-item-group title="分组2">
-                        <el-menu-item index="2-3">历史信息</el-menu-item>
+                        <el-menu-item index="2-1">
+                            <router-link :to="{path:'/leaveapply'}" background="red">申请请假</router-link>
+                        </el-menu-item>
+                        <el-menu-item index="2-2">
+                            <router-link :to="{path:'/leavestate'}">审核状态</router-link>
+                        </el-menu-item>
+                        <el-menu-item index="2-3">
+                            <router-link :to="{path:'/leavehistory'}">历史信息</router-link>
+                        </el-menu-item>
                     </el-menu-item-group>
                 </el-submenu>
 
@@ -66,8 +73,9 @@
                         <span>审批</span>
                     </template>
                     <el-menu-item-group>
-                        <template #title>分组一</template>
-                        <el-menu-item index="4-1">请假审批</el-menu-item>
+                        <el-menu-item index="4-1" >
+                            <router-link :to="{path:'/leavecheck'}">请假审批</router-link>
+                        </el-menu-item>
                         <el-menu-item index="4-2">
                             <router-link :to="{path: '/Confirm'}">
                                 加班审批
@@ -77,7 +85,7 @@
 
                 <el-menu-item index="5">
                     <i class="el-icon-setting"></i>
-                    <template #title>设置</template>
+                    <router-link :to="{path:'/set'}">设置</router-link>
                 </el-menu-item>
 
 
@@ -94,6 +102,11 @@
 <script>
     export default {
         name: "Homepage",
+        data(){
+            return {
+                imgSrc:require('../assets/save.jpg')
+            }
+        },
         methods: {
             handleOpen(key, keyPath) {
                 console.log(key, keyPath);
@@ -101,7 +114,10 @@
             handleClose(key, keyPath) {
                 console.log(key, keyPath);
             }
-        }
+        },
+        created() {
+            this.$router.push('SubHomePage')
+        },
     }
 </script>
 
@@ -111,8 +127,6 @@
         text-decoration: none;
 
     }
-    .router-link-active {
-        text-decoration: none;
-        color: #e2a714;
-    }
+
+
 </style>

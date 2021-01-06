@@ -1,8 +1,8 @@
 <template>
     <div>
-        <el-form ref="overtimeinfo" :model="overtimeinfo" label-width="120px"
+        <el-form ref="overtimeinfo" :model="overtimeinfo"  disabled="true" label-width="120px"
                  size="mini" style = 'width: 560px'>
-            <el-form-item label="工号">
+            <el-form-item label="工号" >
                 <el-input v-model="overtimeinfo.epnum"></el-input>
             </el-form-item>
             <el-form-item label="加班类型">
@@ -33,11 +33,19 @@
             <el-form-item label="加班描述">
                 <el-input type="textarea" v-model="overtimeinfo.odescrip"></el-input>
             </el-form-item>
-            <el-form-item>
-                <el-button type="primary" @click="onSubmit">提交</el-button>
 
+        </el-form>
+        <el-form ref="overtimeinfo" :model="overtimeinfo"   label-width="120px"
+                 size="mini" style = 'width: 560px'>
+            <el-form-item label="审批描述">
+                <el-input type="textarea" v-model="overtimeinfo.ocomfirmdescrip"></el-input>
+            </el-form-item>
+            <el-form-item>
+                <el-button type="primary" @click="onSubmit" >提交</el-button>
+                <el-button type="primary" @click="goback">返回</el-button>
             </el-form-item>
         </el-form>
+
     </div>
 </template>
 
@@ -77,6 +85,9 @@
         methods: {
             onSubmit() {
                 console.log('submit!');
+            },
+            goback() {
+                this.$router.go(-1);//返回上一层
             }
         }
     }

@@ -1,7 +1,7 @@
 <template>
-    <div class="infinite-list-wrapper" style="overflow:auto" >
+    <div class="infinite-list-wrapper" style="overflow:auto;background-color:white;width:600px;margin-left: 100px;padding-top: 20px" >
         <el-form ref="overtimeinfo" :model="overtimeinfo" label-width="120px"
-                 size="mini" style = 'width: 560px'>
+                  style = 'width: 560px'>
             <el-form-item label="工号">
                 <el-input v-model="overtimeinfo.epnum"></el-input>
             </el-form-item>

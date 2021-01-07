@@ -1,6 +1,6 @@
 <template>
 
-    <el-row >
+    <el-row>
         <el-col :span="4">
 
             <el-menu
@@ -14,11 +14,12 @@
                     active-text-color="#ffd04b">
                 <el-menu-item index="1">
                     <i class="el-icon-menu"></i>
-                    <template #title><router-link :to="{path: '/SubHomePage'}">
-                        主页
-                    </router-link></template>
+                    <template #title>
+                        <router-link :to="{path: '/SubHomePage'}">
+                            主页
+                        </router-link>
+                    </template>
                 </el-menu-item>
-
 
 
                 <el-submenu index="2">
@@ -51,19 +52,19 @@
                             <router-link :to="{path: '/WorkOvertimeApply'}">
                                 加班申请
                             </router-link>
-                            </el-menu-item>
+                        </el-menu-item>
                         <el-menu-item index="3-2">
-                            <router-link :to="{path: '/WorkOvertimeAuditStatus'}" >
+                            <router-link :to="{path: '/WorkOvertimeAuditStatus'}">
                                 审核状态
                             </router-link>
-                            </el-menu-item>
+                        </el-menu-item>
                     </el-menu-item-group>
                     <el-menu-item-group title="分组2">
                         <el-menu-item index="3-3">
                             <router-link :to="{path: '/WorkOvertimeHistory'}">
                                 历史信息
                             </router-link>
-                            </el-menu-item>
+                        </el-menu-item>
                     </el-menu-item-group>
                 </el-submenu>
 
@@ -73,13 +74,14 @@
                         <span>审批</span>
                     </template>
                     <el-menu-item-group>
-                        <el-menu-item index="4-1" >
+                        <el-menu-item index="4-1">
                             <router-link :to="{path:'/leavecheck'}">请假审批</router-link>
                         </el-menu-item>
                         <el-menu-item index="4-2">
                             <router-link :to="{path: '/Confirm'}">
                                 加班审批
-                            </router-link></el-menu-item>
+                            </router-link>
+                        </el-menu-item>
                     </el-menu-item-group>
                 </el-submenu>
 
@@ -87,24 +89,51 @@
                     <i class="el-icon-setting"></i>
                     <router-link :to="{path:'/set'}">设置</router-link>
                 </el-menu-item>
-
+                <el-button :type="typecolor" @click="open" circle style="width:100px;height:100px;"
+                           :disabled="isdisable">上班打卡
+                </el-button>
+                <br>
+                <el-button :type="typecolor1" @click="open" circle style="width:100px;height:100px;"
+                           :disabled="isdisable1">下班打卡
+                </el-button>
+                <br>
 
             </el-menu>
         </el-col>
+
         <el-main>
             <router-view></router-view>
         </el-main>
+
     </el-row>
 
 
 </template>
 
 <script>
-    export default {
+
+    import {defineComponent, h} from 'vue'
+    import {ElMessage} from 'element-plus'
+
+    export default defineComponent({
         name: "Homepage",
-        data(){
+        data() {
             return {
-                imgSrc:require('../assets/save.jpg')
+                imgSrc: require('../assets/save.jpg'),
+                typecolor: "primary",
+                typecolor1: "info",
+                isdisable: false,
+                isdisable1: true,
+                checktable: [
+                    {
+                        epnum: 66666,
+                        ename: '陈项',
+                        workdate: '',
+                        workstartdatetime: '',
+                        workenddatetime: '',
+                        workdescriptext: '',
+                    }
+                ]
             }
         },
         methods: {
@@ -113,16 +142,32 @@
             },
             handleClose(key, keyPath) {
                 console.log(key, keyPath);
-            }
+            },
         },
+
         created() {
             this.$router.push('SubHomePage')
         },
-    }
+        setup() {
+            return {
+                open() {
+                    ElMessage('打卡成功')
+                },
+                openVn() {
+                    ElMessage({
+                        message: h('p', null, [
+                            h('span', null, '内容可以是 '),
+                            h('i', {style: 'color: teal'}, 'VNode')
+                        ])
+                    });
+                }
+            }
+        }
+    })
 </script>
 
 <style scoped>
-    a{
+    a {
         color: white;
         text-decoration: none;
 

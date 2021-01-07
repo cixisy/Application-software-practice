@@ -1,29 +1,30 @@
 <template>
     <div style="width: 1200px;">
-    <el-space wrap>
+        <el-space wrap>
             <el-card class="box-card" v-for="index in 10" :key="index" style="width: 300px;margin-right: 50px">
                 <template #header>
                     <div class="clearfix">
-                        <span style="font-size: 20px; text-align: left" >编号:{{test.id}}</span>
-                        <el-button style="float: right; padding: 3px 0" type="text" @click="modify(index)">修改</el-button>
+                        <span style="font-size: 20px; text-align: left">编号:{{test.id}}</span>
+                        <el-button style="float: right; padding: 3px 0" type="text" @click="modify(index)">修改
+                        </el-button>
                     </div>
                 </template>
-                <div  class="text item" style="text-align: left">
-                   姓名: {{test.name}}
+                <div class="text item" style="text-align: left">
+                    姓名: {{test.name}}
                 </div>
-                <div  class="text item" style="text-align: left">
+                <div class="text item" style="text-align: left">
                     部门: {{test.did}}
                 </div>
-                <div  class="text item" style="text-align: left">
-                   密码: {{test.password}}
+                <div class="text item" style="text-align: left">
+                    密码: {{test.password}}
                 </div>
-                <div  class="text item" style="text-align: left">
-                   性别: {{test.sex}}
+                <div class="text item" style="text-align: left">
+                    性别: {{test.sex}}
                 </div>
             </el-card>
-    </el-space>
+        </el-space>
     </div>
-    <el-backtop  :bottom="100">
+    <el-backtop :bottom="100">
         <div
                 style="{
         height: 100%;
@@ -55,7 +56,7 @@
                 <el-input v-model="form.password"></el-input>
             </el-form-item>
         </el-form>
-        <span  class="dialog-footer">
+        <span class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="confirm">确 定</el-button>
       </span>
@@ -68,28 +69,28 @@
 
     export default defineComponent({
         name: "Set",
-        setup(){
+        setup() {
             const test = reactive({
-                name:"王小虎",
-                id:123,
-                did:"AAA",
-                password:"wangxiaohu123",
-                sex:'男'
+                name: "王小虎",
+                id: 123,
+                did: "AAA",
+                password: "wangxiaohu123",
+                sex: '男'
             })
 
-            return{
+            return {
                 test
             }
         },
-        data(){
+        data() {
             return {
-                dialogVisible:false,
-                index:0,
+                dialogVisible: false,
+                index: 0,
                 form: {
-                    id:1,
+                    id: 1,
                     name: '',
-                    pid:1,
-                    password:''
+                    pid: 1,
+                    password: ''
                 }
             };
         },
@@ -99,11 +100,11 @@
                 this.index = index
 
             },
-            confirm(){
+            confirm() {
                 console.log(this.index)
                 this.dialogVisible = false
             }
-    }
+        }
 
     })
 

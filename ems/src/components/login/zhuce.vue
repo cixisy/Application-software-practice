@@ -12,7 +12,7 @@
                 <el-input type="text" v-model="form.did" placeholder="请输入部门号,只能是数字"></el-input>
             </el-form-item>
             <el-form-item label="密码" prop="password">
-                <el-input v-model="form.password" type="password"     placeholder="请输入密码"></el-input>
+                <el-input v-model="form.password" type="password" placeholder="请输入密码"></el-input>
             </el-form-item>
             <el-form-item>
                 <el-radio v-model="form.radio" label="1">员工</el-radio>
@@ -28,7 +28,7 @@
                 width="30%"
         >
             <span>请输入账号和密码</span>
-            <span  class="dialog-footer">
+            <span class="dialog-footer">
         <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
       </span>
         </el-dialog>
@@ -108,7 +108,7 @@
                         return false;
                     }
                 });
-           },
+            },
 
         }
     }
@@ -121,5 +121,6 @@
         width: 350px;
         margin: 180px auto;
         padding: 35px 35px 15px 15px;
+        background-color: white;
     }
 </style>

@@ -3,7 +3,7 @@
         <el-table
                 :data="tableData"
                 style="width: 100%"
-                height="400"  highlight-current-row="true">
+                height="400" highlight-current-row="true">
             <el-table-column
                     prop="date"
                     label="日期"
@@ -30,7 +30,7 @@
                 </template>
             </el-table-column>
         </el-table>
-        </div>
+    </div>
 </template>
 
 <script lang="js">
@@ -44,54 +44,54 @@
                     date: '2016-05-02',
                     name: '王小虎',
                     desc: '啦啦啦啦啊啦啦啦啦啦啦啦啦啦啦',
-                    state:'通过'
-                },{
+                    state: '通过'
+                }, {
                     date: '2016-05-02',
                     name: '王小虎',
                     desc: '啦啦啦啦啊啦啦啦啦啦啦啦啦啦啦',
-                    state:'通过'
-                },{
+                    state: '通过'
+                }, {
                     date: '2016-05-02',
                     name: '王小虎',
                     desc: '啦啦啦啦啊啦啦啦啦啦啦啦啦啦啦',
-                    state:'通过'
-                },{
+                    state: '通过'
+                }, {
                     date: '2016-05-02',
                     name: '王小虎',
                     desc: '啦啦啦啦啊啦啦啦啦啦啦啦啦啦啦',
-                    state:'通过'
-                },{
+                    state: '通过'
+                }, {
                     date: '2016-05-02',
                     name: '王小虎',
                     desc: '啦啦啦啦啊啦啦啦啦啦啦啦啦啦啦',
-                    state:'通过'
-                },{
+                    state: '通过'
+                }, {
                     date: '2016-05-02',
                     name: '王小虎',
                     desc: '啦啦啦啦啊啦啦啦啦啦啦啦啦啦啦',
-                    state:'通过'
-                },{
+                    state: '通过'
+                }, {
                     date: '2016-05-02',
                     name: '王小虎',
                     desc: '啦啦啦啦啊啦啦啦啦啦啦啦啦啦啦',
-                    state:'通过'
-                },{
+                    state: '通过'
+                }, {
                     date: '2016-05-02',
                     name: '王小虎',
                     desc: '啦啦啦啦啊啦啦啦啦啦啦啦啦啦啦',
-                    state:'通过'
+                    state: '通过'
                 }]
             }
         },
-        methods:{
-            toDetails(index){
+        methods: {
+            toDetails(index) {
                 this.$router.push('/leavedetails')
             },
-            check(){
+            check() {
                 this.$prompt('请输入审批描述', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
-                }).then(({ value }) => {
+                }).then(({value}) => {
                     this.$message({
                         type: 'success',
                         message: '提交成功'

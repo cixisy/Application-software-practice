@@ -23,7 +23,7 @@
                 width="30%"
         >
             <span>请输入账号和密码</span>
-            <span  class="dialog-footer">
+            <span class="dialog-footer">
         <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
       </span>
         </el-dialog>
@@ -44,37 +44,33 @@
                 },
                 rules: {
                     account: [
-                        { required: true, message: '请输入账号,只能是数字', trigger: 'blur' },
+                        {required: true, message: '请输入账号,只能是数字', trigger: 'blur'},
                     ],
                     password: [
-                        { required: true, message: '请输入密码', trigger: 'blur' },
+                        {required: true, message: '请输入密码', trigger: 'blur'},
                     ],
                 },
-                dialogVisible:false
+                dialogVisible: false
             };
         },
         methods: {
             onSubmit(formName) {
-                const { that }= this;
+                const {that} = this;
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        if (that.form.radio=='2')
-                        {
-                            that.$http.get("http://localhost:8081/admin/login?account="+that.form.account+"&password="+that.form.password).then((res)=>{
-                                if (res.data!=0){
-                                    that.$router.push({name:'home',params:{id:res.data}});
-                                }
-                                else {
+                        if (that.form.radio == '2') {
+                            that.$http.get("http://localhost:8081/admin/login?account=" + that.form.account + "&password=" + that.form.password).then((res) => {
+                                if (res.data != 0) {
+                                    that.$router.push({name: 'home', params: {id: res.data}});
+                                } else {
                                     alert("账号或密码错误");
                                 }
                             })
-                        }
-                        else{
-                            that.$http.get("http://localhost:8081/employee/login?account="+that.form.account+"&password="+that.form.password).then((res)=>{
-                                if (res.data!=0){
-                                    that.$router.push({name:'employee',params:{id:res.data}})
-                                }
-                                else {
+                        } else {
+                            that.$http.get("http://localhost:8081/employee/login?account=" + that.form.account + "&password=" + that.form.password).then((res) => {
+                                if (res.data != 0) {
+                                    that.$router.push({name: 'employee', params: {id: res.data}})
+                                } else {
                                     alert("账号或密码错误");
                                 }
                             })
@@ -96,23 +92,26 @@
 
 <style scoped>
 
-    .login-box{
+    .login-box {
         border: 1px solid black;
         width: 350px;
         margin: 180px auto;
         padding: 35px 35px 15px 15px;
+        background-color: white;
     }
-    .background{
-        width:100%;
-        height:100%;  /**宽高100%是为了图片铺满屏幕 */
-        z-index:-1;
+
+    .background {
+        width: 100%;
+        height: 100%; /**宽高100%是为了图片铺满屏幕 */
+        z-index: -1;
         position: absolute;
     }
 
-    .front{
-        z-index:1;
+    .front {
+        z-index: 1;
         position: absolute;
     }
+
     #building {
         background: url("../../assets/save.jpg");
         width: 100%;

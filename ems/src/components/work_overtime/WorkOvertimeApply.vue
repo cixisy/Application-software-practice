@@ -1,7 +1,8 @@
 <template>
-    <div class="infinite-list-wrapper" style="overflow:auto;background-color:white;width:600px;margin-left: 100px;padding-top: 20px" >
+    <div class="infinite-list-wrapper"
+         style="overflow:auto;background-color:white;width:600px;margin-left: 100px;padding-top: 20px">
         <el-form ref="overtimeinfo" :model="overtimeinfo" label-width="120px"
-                  style = 'width: 560px'>
+                 style='width: 560px'>
             <el-form-item label="工号">
                 <el-input v-model="overtimeinfo.epnum"></el-input>
             </el-form-item>
@@ -13,7 +14,8 @@
             </el-form-item>
             <el-form-item label="加班开始时间">
                 <el-col :span="11">
-                    <el-date-picker type="date" placeholder="选择日期" v-model="stime0" style="width: 100%;"></el-date-picker>
+                    <el-date-picker type="date" placeholder="选择日期" v-model="stime0"
+                                    style="width: 100%;"></el-date-picker>
                 </el-col>
                 <el-col class="line" :span="2">-</el-col>
                 <el-col :span="11">
@@ -22,7 +24,8 @@
             </el-form-item>
             <el-form-item label="加班结束时间">
                 <el-col :span="11">
-                    <el-date-picker type="date" placeholder="选择日期" v-model="stime1" style="width: 100%;"></el-date-picker>
+                    <el-date-picker type="date" placeholder="选择日期" v-model="stime1"
+                                    style="width: 100%;"></el-date-picker>
                 </el-col>
                 <el-col class="line" :span="2">-</el-col>
                 <el-col :span="11">
@@ -56,21 +59,21 @@
                     resource: '',
                     desc: ''
                 },
-                stime0 :'',
-                etime0  : '',
-                stime1 :'',
-                etime1  : '',
+                stime0: '',
+                etime0: '',
+                stime1: '',
+                etime1: '',
                 overtimeinfo: {
-                    epnum : 1,
-                    otype : 1,
-                    ostart : '',
-                    oend :'',
-                    ototal : 300,
-                    odescrip :'text',
-                    omark :0,
-                    oconfirmperson :'',
-                    ocomfirmdescrip :'',
-                    applytime : '2020-06-03 00:00:00',
+                    epnum: 1,
+                    otype: 1,
+                    ostart: '',
+                    oend: '',
+                    ototal: 300,
+                    odescrip: 'text',
+                    omark: 0,
+                    oconfirmperson: '',
+                    ocomfirmdescrip: '',
+                    applytime: '2020-06-03 00:00:00',
                 },
             }
         },

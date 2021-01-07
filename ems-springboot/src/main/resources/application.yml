@@ -1,0 +1,11 @@
+server:
+  port: 8081
+  servlet:
+    context-path: /ems
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/ems?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: AS3650

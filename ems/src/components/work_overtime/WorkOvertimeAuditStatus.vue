@@ -6,7 +6,7 @@
                 style="width: 1200px">
             <el-table-column
                     fixed
-                    prop="applytime"
+                    prop="apply_time"
                     label="申请时间"
                     width="160">
             </el-table-column>
@@ -16,38 +16,38 @@
                     width="120">
             </el-table-column>
             <el-table-column
-                    prop="otype"
+                    prop="o_type"
                     label="加班类型"
                     width="120">
             </el-table-column>
             <el-table-column
-                    prop="ostart"
+                    prop="o_start"
                     label="加班开始时间"
                     width="160">
             </el-table-column>
             <el-table-column
-                    prop="oend"
+                    prop="o_end"
                     label="加班结束时间"
                     width="160">
             </el-table-column>
             <el-table-column
-                    prop="odescrip"
+                    prop="o_descrip"
                     label="加班描述"
                     width="300">
             </el-table-column>
             <el-table-column
-                    prop="ocomfirmdescrip"
+                    prop="o_comfirm_descrip"
                     label="审批描述"
                     width="300">
             </el-table-column>
             <el-table-column
-                    prop="oconfirmperson"
+                    prop="o_confirm_person"
                     label="审批人"
                     width="120">
             </el-table-column>
             <el-table-column
                     fixed="right"
-                    prop="omark"
+                    prop="o_mark"
                     label="审批状态"
                     width="100">
             </el-table-column>
@@ -56,38 +56,60 @@
 </template>
 
 <script>
+    /* eslint-disable */
     export default {
         name: "WorkOvertimeAuditStatus",
         data() {
             return {
                 tableData: [{
-                    epnum: 1,
-                    otype: 1,
-                    ostart: '',
-                    oend: '',
-                    ototal: 300,
-                    odescrip: 'text',
-                    omark: 0,
-                    oconfirmperson: '',
-                    ocomfirmdescrip: '',
-                    applytime: '2020-06-03 00:00:00',
-                },
-                    {
-                        epnum: 1,
-                        otype: 1,
-                        ostart: '',
-                        oend: '',
-                        ototal: 300,
-                        odescrip: 'text',
-                        omark: 0,
-                        oconfirmperson: '',
-                        ocomfirmdescrip: '',
-                        applytime: '2020-06-03 00:00:00',
-                    },],
+                    epnum: 20210001,
+                    o_type: 1,
+                    o_start: '',
+                    o_end: '',
+                    o_total: 300,
+                    o_descrip: 'text',
+                    o_mark: '通过',
+                    o_confirm_person: '',
+                    o_comfirm_descrip: '',
+                    apply_time: '2020-06-03 00:00:00',
+                },],
+                id:'',
+                flag: 0,
 
             }
         },
+        beforeRouteEnter: (to, from, next) => {
+            next(vm => {
+                vm.getParams();
+            });
+        },
         methods: {
+            gettable(){
+                this.$http.get("http://localhost:8081/ems/employee/queryostatus?id=" + this.id).then((res) => {
+                    this.tableData = res.data;
+
+
+                    if (this.tableData.length == 0) {
+                        this.flag = 0;
+                    } else {
+                        this.flag = 1;
+                        for (let i = 0; i < this.tableData.length; i++) {
+                            if (this.tableData[i].o_mark == '0') {
+                                this.tableData[i].o_mark = "未审批"
+                            } else if (this.tableData[i].o_mark == '1') {
+                                this.tableData[i].o_mark = "通过"
+                            } else if (this.tableData[i].o_mark == '2') {
+                                this.tableData[i].o_mark = "未通过"
+                            }
+                        }
+                    }
+                })
+            },
+            getParams() {
+                this.id = this.$route.query.id;
+                console.log(this.id,'加班状态');
+                this.gettable()
+            },
             handleClick(row) {
                 console.log(row);
             }

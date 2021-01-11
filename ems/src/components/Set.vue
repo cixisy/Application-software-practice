@@ -1,30 +1,29 @@
 <template>
     <div style="width: 1200px;">
-        <el-space wrap>
-            <el-card class="box-card" v-for="index in 10" :key="index" style="width: 300px;margin-right: 50px">
+    <el-space wrap>
+            <el-card class="box-card" v-for="(item,index) in test" :key="index" style="width: 300px;margin-right: 50px">
                 <template #header>
                     <div class="clearfix">
-                        <span style="font-size: 20px; text-align: left">编号:{{test.id}}</span>
-                        <el-button style="float: right; padding: 3px 0" type="text" @click="modify(index)">修改
-                        </el-button>
+                        <span style="font-size: 20px; text-align: left" >编号:{{item.epnum}}</span>
+                        <el-button style="float: right; padding: 3px 0" type="text" @click="modify(index)">修改</el-button>
                     </div>
                 </template>
-                <div class="text item" style="text-align: left">
-                    姓名: {{test.name}}
+                <div  class="text item" style="text-align: left">
+                   姓名: {{item.ename}}
                 </div>
-                <div class="text item" style="text-align: left">
-                    部门: {{test.did}}
+                <div  class="text item" style="text-align: left">
+                    部门: {{item.dep_num}}
                 </div>
-                <div class="text item" style="text-align: left">
-                    密码: {{test.password}}
+                <div  class="text item" style="text-align: left">
+                   密码: {{item.pwd}}
                 </div>
-                <div class="text item" style="text-align: left">
-                    性别: {{test.sex}}
+                <div  class="text item" style="text-align: left">
+                   性别: {{item.sex}}
                 </div>
             </el-card>
-        </el-space>
+    </el-space>
     </div>
-    <el-backtop :bottom="100">
+    <el-backtop  :bottom="100">
         <div
                 style="{
         height: 100%;
@@ -55,8 +54,15 @@
             <el-form-item label="密码">
                 <el-input v-model="form.password"></el-input>
             </el-form-item>
+			<el-form-item label="上级员工">
+			    <el-input v-model="form.spNum"></el-input>
+			</el-form-item>
+			<el-form-item label="是否升职" prop="flag">
+			    <el-radio v-model="form.flag" label="1">升职</el-radio>
+			    <el-radio v-model="form.flag" label="0">降职</el-radio>
+			</el-form-item>
         </el-form>
-        <span class="dialog-footer">
+        <span  class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="confirm">确 定</el-button>
       </span>
@@ -65,46 +71,67 @@
 </template>
 
 <script lang="js">
-    import {defineComponent, reactive} from 'vue'
+    /* eslint-disable */
+    import {defineComponent} from 'vue'
 
     export default defineComponent({
         name: "Set",
-        setup() {
-            const test = reactive({
-                name: "王小虎",
-                id: 123,
-                did: "AAA",
-                password: "wangxiaohu123",
-                sex: '男'
-            })
 
+        data(){
             return {
-                test
-            }
-        },
-        data() {
-            return {
-                dialogVisible: false,
-                index: 0,
+                dialogVisible:false,
+                index:0,
                 form: {
-                    id: 1,
+                    id:1,
                     name: '',
-                    pid: 1,
-                    password: ''
-                }
+                    pid:1,
+                    password:'',
+					spNum:'',
+					flag:'0'
+                },
+				test:[]
             };
         },
+		beforeRouteEnter: (to, from, next) => {
+			next(vm => {
+				vm.getParams();
+			});
+		},
         methods: {
+			getParams(){
+				this.$http.get("http://localhost:8081/ems/employee/queryAllEmployeeInfo").then((res)=>{
+					this.test = res.data;
+				})
+			},
             modify(index) {
-                this.dialogVisible = true;
+
                 this.index = index
+				this.form.id = this.test[index].epnum
+				this.form.name = this.test[index].ename
+				this.form.pid = this.test[index].dep_num
+				this.form.password = this.test[index].pwd
+				this.form.spNum = this.test[index].superior_epnum
+				this.form.flag = ''+this.test[index].superior_mark
+				this.dialogVisible = true;
+
+
 
             },
-            confirm() {
-                console.log(this.index)
+            confirm(){
+                this.$http.get("http://localhost:8081/ems/employee/updateEmployeeInfo?id="+this.test[this.index].epnum+"&nId="+this.form.id
+				+"&nName="+this.form.name+"&ndNum="+this.form.pid+"&nPwd="+this.form.password+"&nsNum="+this.form.spNum+"&nMark="+this.form.flag
+				).then((res)=>{
+					this.$http.get("http://localhost:8081/ems/employee/queryAllEmployeeInfo").then((res)=>{
+						this.test = res.data;
+					})
+				})
+
+
+
+
                 this.dialogVisible = false
             }
-        }
+    }
 
     })
 

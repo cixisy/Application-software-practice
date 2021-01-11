@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chen.mapper.leaveInfoMapper">
+
+    <select id="queryLeaveInfo" resultType="com.chen.entity.Leave">
+        select * from leave_info where epnum = #{id}
+    </select>
+
+    <insert id="insertLeaveInfo" parameterType="map">
+        insert into leave_info(epnum,l_type,l_start,l_end,l_total,l_descrip,l_mark,apply_time)
+        values (#{id},#{type},#{starttime},#{lasttime},#{total},#{desc},#{mark},#{currenttime})
+    </insert>
+
+    <delete id="deleteLeaveInfo">
+        delete from leave_info where epnum = #{id} and apply_time = #{date}
+    </delete>
+
+    <select id="queryLeaveCheckList" parameterType="int" resultType="com.chen.entity.Leave">
+        select * from leave_info as l, employee_info as e where l.epnum = e.epnum and e.superior_epnum = #{id} and l_mark = 0
+    </select>
+
+    <update id="insertCheckInfo">
+        update leave_info set l_mark = #{type}, leave_confirm_person = #{name}, leave_comfirm_descrip = #{desc}
+        where apply_time = #{date} and epnum = #{id}
+    </update>
+</mapper>

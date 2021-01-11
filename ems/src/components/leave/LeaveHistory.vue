@@ -3,24 +3,24 @@
         <el-table
                 :data="tableData"
                 style="width: 100%"
-                height="400" highlight-current-row="true">
+                height="400"  highlight-current-row="true">
             <el-table-column
-                    prop="date"
+                    prop="apply_time"
                     label="日期"
                     width="150">
             </el-table-column>
             <el-table-column
-                    prop="name"
+                    prop="leave_confirm_person"
                     label="审批人"
                     width="150">
             </el-table-column>
             <el-table-column
-                    prop="desc"
+                    prop="leave_comfirm_descrip"
                     label="审批描述"
                     width="250">
             </el-table-column>
             <el-table-column
-                    prop="state"
+                    prop="l_mark"
                     label="审批状态"
                     width="120">
             </el-table-column>
@@ -34,85 +34,58 @@
             </el-table-column>
 
         </el-table>
-        <!--        <el-table-->
-        <!--                :data="tableData"-->
-        <!--                style="width: 100%" @click="toDetails">-->
-        <!--            <el-table-column-->
-        <!--                    prop="date"-->
-        <!--                    label="日期"-->
-        <!--                    width="180">-->
-        <!--            </el-table-column>-->
-        <!--            <el-table-column-->
-        <!--                    prop="name"-->
-        <!--                    label="审批人"-->
-        <!--                    width="180">-->
-        <!--            </el-table-column>-->
-        <!--            <el-table-column-->
-        <!--                    prop="desc"-->
-        <!--                    label="审批描述"-->
-        <!--                    width="200">-->
-        <!--            </el-table-column>-->
-        <!--            <el-table-column-->
-        <!--                    prop="state"-->
-        <!--                    label="审批状态">-->
-        <!--            </el-table-column>-->
-        <!--        </el-table>-->
     </div>
 </template>
 
-<script lang="ts">
+<script lang="js">
+	/* eslint-disable */
     import {defineComponent} from 'vue'
 
     export default defineComponent({
         name: "LeaveHistory",
         data() {
             return {
-                tableData: [{
-                    date: '2016-05-02',
-                    name: '王小虎',
-                    desc: '啦啦啦啦啊啦啦啦啦啦啦啦啦啦啦',
-                    state: '通过'
-                }, {
-                    date: '2016-05-02',
-                    name: '王小虎',
-                    desc: '啦啦啦啦啊啦啦啦啦啦啦啦啦啦啦',
-                    state: '通过'
-                }, {
-                    date: '2016-05-02',
-                    name: '王小虎',
-                    desc: '啦啦啦啦啊啦啦啦啦啦啦啦啦啦啦',
-                    state: '通过'
-                }, {
-                    date: '2016-05-02',
-                    name: '王小虎',
-                    desc: '啦啦啦啦啊啦啦啦啦啦啦啦啦啦啦',
-                    state: '通过'
-                }, {
-                    date: '2016-05-02',
-                    name: '王小虎',
-                    desc: '啦啦啦啦啊啦啦啦啦啦啦啦啦啦啦',
-                    state: '通过'
-                }, {
-                    date: '2016-05-02',
-                    name: '王小虎',
-                    desc: '啦啦啦啦啊啦啦啦啦啦啦啦啦啦啦',
-                    state: '通过'
-                }, {
-                    date: '2016-05-02',
-                    name: '王小虎',
-                    desc: '啦啦啦啦啊啦啦啦啦啦啦啦啦啦啦',
-                    state: '通过'
-                }, {
-                    date: '2016-05-02',
-                    name: '王小虎',
-                    desc: '啦啦啦啦啊啦啦啦啦啦啦啦啦啦啦',
-                    state: '通过'
-                }]
+				id: '',
+                tableData: []
             }
         },
-        methods: {
-            toDetails() {
-                this.$router.push('/leavedetails')
+		beforeRouteEnter: (to, from, next) => {
+			next(vm => {
+				vm.getParams();
+			});
+		},
+        methods:{
+			getParams() {
+				this.id = this.$route.query.id;
+				this.$http.get("http://localhost:8081/ems/employee/queryLeaveInfoById?id=" + this.id).then((res) => {
+					this.tableData = res.data;
+					if (this.tableData.length == 0) {
+						this.flag = 0;
+					} else {
+						this.flag = 1;
+						for (let i = 0; i < this.tableData.length; i++) {
+							if (this.tableData[i].l_mark == '0') {
+								this.tableData[i].l_mark = "未审批"
+							} else if (this.tableData[i].l_mark == '1') {
+								this.tableData[i].l_mark = "通过"
+							} else if (this.tableData[i].l_mark == '2') {
+								this.tableData[i].l_mark = "未通过"
+							}
+						}
+					}
+				})
+			},
+            toDetails(row){
+				
+				this.$router.push({path:'/leavedetails',query:{
+					apply_time :  row.apply_time,
+					epnum : row.epnum,
+					l_type : row.l_type,
+					l_start : row.l_start,
+					l_end : row.l_end,
+					l_descrip : row.l_descrip,
+					leave_comfirm_descrip : row.leave_comfirm_descrip
+				}})
             }
         }
     })

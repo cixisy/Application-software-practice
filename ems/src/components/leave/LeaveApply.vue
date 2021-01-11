@@ -2,16 +2,8 @@
     <div id="guoguo" style="width:700px;margin-left: 100px;padding-top: 20px">
         <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm"
                  style="margin-left: 100px;margin-top: 20px">
-            <el-form-item label="申请时间">
-                <el-col :span="11">
-                    <el-form-item>
-                        <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.currenttime"
-                                        style="width: 100%;"></el-date-picker>
-                    </el-form-item>
-                </el-col>
-            </el-form-item>
-            <el-form-item label="员工编号" style="width: 330px;">
-                <el-input v-model="ruleForm.number" placeholder="请输入员工编号"></el-input>
+            <el-form-item label="员工编号" style="width: 330px;" required>
+                <el-input v-model="ruleForm.id" placeholder="请输入员工编号"></el-input>
             </el-form-item>
             <el-form-item label="请假类型" style="width: 330px;" required>
                 <el-select v-model="ruleForm.type" placeholder="请选择请假类型">
@@ -61,54 +53,64 @@
         name: "LeaveApply",
         data() {
             return {
+				id:'',
                 ruleForm: {
-                    currenttime: '',
-                    data1: '',
                     type: '',
                     starttime: '',
                     lasttime: '',
-                    delivery: false,
-                    resource: '',
                     desc: '',
-                    number: 12
+                    id: 12
                 },
                 rules: {
-                    name: [
-                        {required: true, message: '请输入活动名称', trigger: 'blur'},
-                        {min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur'}
-                    ],
-                    region: [
-                        {required: true, message: '请选择活动区域', trigger: 'change'}
-                    ],
-                    date1: [
+                    starttime: [
                         {type: 'date', required: true, message: '请选择日期', trigger: 'change'}
                     ],
-                    date2: [
+                    lasttime: [
                         {type: 'date', required: true, message: '请选择时间', trigger: 'change'}
                     ],
                     type: [
-                        {type: 'array', required: true, message: '请至少选择一个活动性质', trigger: 'change'}
-                    ],
-                    resource: [
-                        {required: true, message: '请选择活动资源', trigger: 'change'}
-                    ],
-                    desc: [
-                        {required: true, message: '请填写活动形式', trigger: 'blur'}
+                        {type: 'array', required: true, message: '请至少选择一个类型', trigger: 'change'}
                     ]
+                    
                 }
             };
         },
+		beforeRouteEnter: (to, from, next) => {
+			next(vm => {
+				vm.getParams();
+			});
+		},
         methods: {
+			getParams() {
+				this.id = this.$route.query.id;
+				this.ruleForm.id = this.id;
+				console.log(this.id);
+			},
             submitForm(formName) {
                 this.$confirm('是否提交请假信息', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                    this.$message({
-                        type: 'success',
-                        message: '提交成功!'
-                    });
+					this.axios({
+					  method:'post',
+					  url:"http://localhost:8081/ems/employee/leaveApply",
+					  data:this.ruleForm,
+					
+					}).then((res)=>{
+					  this.$alert('申请已提交！', '提示', {
+					    confirmButtonText: '确定',
+					    callback: action => {
+					      this.$message({
+					          type: 'success',
+					          message: '提交成功!'
+					      });
+					    }
+					  });
+					  this.flash();
+					});
+                    
+					
                 }).catch(() => {
                     this.$message({
                         type: 'info',
@@ -116,6 +118,12 @@
                     });
                 });
             },
+			flash(){
+				this.ruleForm.type = '',
+				this.ruleForm.starttime = '',
+				this.ruleForm.lasttime = '',
+				this.ruleForm.desc = ''
+			},
             resetForm(formName) {
                 this.$refs[formName].resetFields();
             }

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chen.mapper.employeeMapper">
+
+    <select id="queryEmployeeList" resultType="Employee">
+        select * from employee_info
+    </select>
+
+    <insert id="insertEmployee" parameterType="com.chen.entity.Employee">
+        insert into employee_info(epnum,ename,pwd,sex,superior_epnum,dep_num,superior_mark) values (#{epNum},#{eName},#{pwd},#{sex},#{spNum},#{dNum},#{spMark})
+    </insert>
+
+    <select id="queryNameById" resultType="String">
+        select ename from employee_info where epnum = #{id}
+    </select>
+
+    <update id="updateEmployeeInfo" >
+        update employee_info set epnum = #{nId}, ename = #{nName}, pwd = #{nPwd}, dep_num = #{ndNum}, superior_epnum = #{nsNum},superior_mark = #{nMark}
+        where epnum = #{id}
+    </update>
+
+    <update id="updateEmployeeInfoSelf" >
+        update employee_info set epnum = #{nId}, ename = #{nName}, pwd = #{nPwd}, dep_num = #{ndNum}, superior_epnum = #{nsNum},superior_mark = #{nMark}
+        where epnum = #{nId}
+    </update>
+
+</mapper>

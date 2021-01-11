@@ -1,6 +1,6 @@
 <template>
-    <div id="login">
-        <el-form :model="form" :rules="rules" ref="loginForm" label-width="100px" class="login-box">
+    <div id="login" >
+        <el-form :model="form" :rules="rules" ref="loginForm" label-width="100px" class="login-box" style="background-color: white">
             <h3 style="font-size: 20px">欢迎登陆</h3>
             <el-form-item label="账号" prop="account">
                 <el-input type="text" v-model="form.account" placeholder="请输入账号,只能是数字"></el-input>
@@ -23,7 +23,7 @@
                 width="30%"
         >
             <span>请输入账号和密码</span>
-            <span class="dialog-footer">
+            <span  class="dialog-footer">
         <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
       </span>
         </el-dialog>
@@ -44,33 +44,38 @@
                 },
                 rules: {
                     account: [
-                        {required: true, message: '请输入账号,只能是数字', trigger: 'blur'},
+                        { required: true, message: '请输入账号,只能是数字', trigger: 'blur' },
                     ],
                     password: [
-                        {required: true, message: '请输入密码', trigger: 'blur'},
+                        { required: true, message: '请输入密码', trigger: 'blur' },
                     ],
                 },
-                dialogVisible: false
+                dialogVisible:false
             };
         },
         methods: {
             onSubmit(formName) {
-                const {that} = this;
+				console.log("进入login");
+                // const  that = this;
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        if (that.form.radio == '2') {
-                            that.$http.get("http://localhost:8081/admin/login?account=" + that.form.account + "&password=" + that.form.password).then((res) => {
-                                if (res.data != 0) {
-                                    that.$router.push({name: 'home', params: {id: res.data}});
-                                } else {
+                        if (this.form.radio=='2')
+                        {
+                            this.$http.get("http://localhost:8081/ems/admin/login?account="+this.form.account+"&password="+this.form.password).then((res)=>{
+                                if (res.data!=0){
+                                    this.$router.push({name:'Homepage',params:{id:res.data,flag:1}});
+                                }
+                                else {
                                     alert("账号或密码错误");
                                 }
                             })
-                        } else {
-                            that.$http.get("http://localhost:8081/employee/login?account=" + that.form.account + "&password=" + that.form.password).then((res) => {
-                                if (res.data != 0) {
-                                    that.$router.push({name: 'employee', params: {id: res.data}})
-                                } else {
+                        }
+                        else{
+                            this.$http.get("http://localhost:8081/ems/employee/login?account="+this.form.account+"&password="+this.form.password).then((res)=>{
+                                if (res.data!=0){
+                                    this.$router.push({name:'Homepage',params:{id:res.data,flag:0}})
+                                }
+                                else {
                                     alert("账号或密码错误");
                                 }
                             })
@@ -78,7 +83,7 @@
 
                     } else {
                         alert('error submit!!');
-                        that.dialogVisible = true;
+                        this.dialogVisible = true;
                         return false;
                     }
                 });
@@ -92,26 +97,23 @@
 
 <style scoped>
 
-    .login-box {
+    .login-box{
         border: 1px solid black;
         width: 350px;
         margin: 180px auto;
         padding: 35px 35px 15px 15px;
-        background-color: white;
     }
-
-    .background {
-        width: 100%;
-        height: 100%; /**宽高100%是为了图片铺满屏幕 */
-        z-index: -1;
+    .background{
+        width:100%;
+        height:100%;  /**宽高100%是为了图片铺满屏幕 */
+        z-index:-1;
         position: absolute;
     }
 
-    .front {
-        z-index: 1;
+    .front{
+        z-index:1;
         position: absolute;
     }
-
     #building {
         background: url("../../assets/save.jpg");
         width: 100%;

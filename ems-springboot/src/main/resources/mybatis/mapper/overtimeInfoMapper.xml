@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chen.mapper.overtimeInfoMapper">
+    <select id="queryOvertimeStatus" resultType="com.chen.entity.OverTime">
+        select * from overtime_info as l where l.epnum =  #{id} and l.o_mark = 0
+    </select>
+    <select id="queryOhistory" resultType="com.chen.entity.OverTime">
+        select * from overtime_info where epnum = #{id}
+    </select>
+    <select id="getOvertimeCheck" resultType="com.chen.entity.OverTime">
+       select * from overtime_info as l, employee_info as e where l.epnum = e.epnum and e.superior_epnum = #{id} and l.o_mark = 0
+    </select>
+    <insert id="insertOvertimeInfo" parameterType="map">
+        insert into overtime_info(epnum,o_type,o_start,o_end,o_total,o_descrip,o_mark,
+        o_confirm_person,o_comfirm_descrip,apply_time)
+
+        values (#{epnum},#{otype},#{ostart},#{oend},#{ototal},#{odescrip},
+        #{omark},#{oconfirmperson},#{ocomfirmdescrip},#{applytime})
+    </insert>
+</mapper>

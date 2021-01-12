@@ -9,10 +9,10 @@
                 <el-input type="text" v-model="form.username" placeholder="请输入姓名"></el-input>
             </el-form-item>
 			<el-form-item label="性别" prop="sex">
-			 
+
 			      <el-radio v-model="form.sex" label="1">男</el-radio>
 			      <el-radio v-model="form.sex" label="2">女</el-radio>
-		
+
 			  </el-form-item>
             <el-form-item label="部门" prop="did">
                 <el-input type="text" v-model="form.did" placeholder="请输入部门号,只能是数字"></el-input>
@@ -23,10 +23,6 @@
             <el-form-item label="密码" prop="password">
                 <el-input v-model="form.password" type="password"     placeholder="请输入密码"></el-input>
             </el-form-item>
-           <!-- <el-form-item>
-                <el-radio v-model="form.radio" label="1">员工</el-radio>
-                <el-radio v-model="form.radio" label="2">管理员</el-radio>
-            </el-form-item> -->
             <el-form-item>
                 <el-button type="primary" @click="onSubmit('loginForm')">注册</el-button>
             </el-form-item>
@@ -84,8 +80,6 @@
         },
         methods: {
             onSubmit(formName) {
-                //const this = getCurrentInstance();
-                //const that = this;
 				console.log("进入注册")
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
@@ -100,19 +94,8 @@
                                     this.$router.go(0);
                                 }
                             })
-							alert("注册失败，输入类型不符或账号已存在");
-							this.$router.go(0);
-                        } else {
-                            this.$http.get("http://localhost:8081/admin/zhuce?account=" + this.form.account + "&name=" + this.form.username + "&did=" + this.form.did + "&password="
-                                + this.form.password).then((res) => {
-                                if (res.data != 0) {
-                                    alert("注册成功！");
-                                    this.$router.push({name: 'home', params: {id: res.data}});
-                                } else {
-                                    alert("注册失败，输入类型不符或账号已存在");
-                                    this.$router.go(0);
-                                }
-                            })
+
+
                         }
 
                     } else {

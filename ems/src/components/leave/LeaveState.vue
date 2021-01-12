@@ -13,11 +13,11 @@
 				<template #default="scope">
 					<el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
 					<el-button
-					          @click="deleteRow(scope.$index, tableData)"
-					          type="text"
-					          size="small">
-					          撤销
-					        </el-button>
+							@click="deleteRow(scope.$index, tableData)"
+							type="text"
+							size="small">
+						撤销
+					</el-button>
 					<!-- <el-button type="text" size="small" @click="delete(scope.row)">撤销</el-button> -->
 				</template>
 			</el-table-column>
@@ -40,7 +40,7 @@
 				flag: 0,
 				tableData: [{
 
-					}
+				}
 				],
 				list:{}
 			}
@@ -75,44 +75,44 @@
 			},
 			handleClick(row) {
 				this.$router.push({path:'/leavedetails',query:{
-					apply_time :  row.apply_time,
-					epnum : row.epnum,
-					l_type : row.l_type,
-					l_start : row.l_start,
-					l_end : row.l_end,
-					l_descrip : row.l_descrip,
-					leave_comfirm_descrip : row.leave_comfirm_descrip
-				}})
+						apply_time :  row.apply_time,
+						epnum : row.epnum,
+						l_type : row.l_type,
+						l_start : row.l_start,
+						l_end : row.l_end,
+						l_descrip : row.l_descrip,
+						leave_comfirm_descrip : row.leave_comfirm_descrip
+					}})
 			},
 			deleteRow(index,row){
 				console.log("进入 delete")
 				console.log(index)
 				console.log(row)
 				this.$confirm('是否撤销请假信息', '提示', {
-				    confirmButtonText: '确定',
-				    cancelButtonText: '取消',
-				    type: 'warning'
+					confirmButtonText: '确定',
+					cancelButtonText: '取消',
+					type: 'warning'
 				}).then(() => {
 					this.$http.get("http://localhost:8081/ems/employee/deleteOneLeaveInfo?id=" + row[index].epnum  + "&date=" + row[index].apply_time)
-					.then((res)=>{
-					  this.$alert('申请已撤销！', '提示', {
-					    confirmButtonText: '确定',
-					    callback: action => {
-					      this.$message({
-					          type: 'success',
-					          message: '撤销成功!',
-					      });
-					    },
-					  });
-					  row.splice(index, 1);
-					});
-				    
-					
+							.then((res)=>{
+								this.$alert('申请已撤销！', '提示', {
+									confirmButtonText: '确定',
+									callback: action => {
+										this.$message({
+											type: 'success',
+											message: '撤销成功!',
+										});
+									},
+								});
+								row.splice(index, 1);
+							});
+
+
 				}).catch(() => {
-				    this.$message({
-				        type: 'info',
-				        message: '已取消'
-				    });
+					this.$message({
+						type: 'info',
+						message: '已取消'
+					});
 				});
 			}
 		}

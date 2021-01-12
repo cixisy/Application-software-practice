@@ -157,8 +157,8 @@
         },
         methods: {
             predo(){
-                let timestamp0 = moment(new Date()).format("YYYY-MM-DD")+" 08:00:00";
-                let timestamp1 = moment(new Date()).format("YYYY-MM-DD")+" 08:30:00";
+                let timestamp0 = moment(new Date()).format("YYYY-MM-DD")+" 21:00:00";
+                let timestamp1 = moment(new Date()).format("YYYY-MM-DD")+" 21:30:00";
                 let timestamp2 = new Date(timestamp0).getTime();
                 let timestamp3 = new Date(timestamp1).getTime();
                 let timestamp4 = new Date().getTime();
@@ -179,8 +179,8 @@
                 console.log(timestamp4)
             },
             predo1(){
-                let timestamp0 = moment(new Date()).format("YYYY-MM-DD")+" 18:00:00";
-                let timestamp1 = moment(new Date()).format("YYYY-MM-DD")+" 18:30:00";
+                let timestamp0 = moment(new Date()).format("YYYY-MM-DD")+" 21:00:00";
+                let timestamp1 = moment(new Date()).format("YYYY-MM-DD")+" 21:30:00";
                 let timestamp2 = new Date(timestamp0).getTime();
                 let timestamp3 = new Date(timestamp1).getTime();
                 let timestamp4 = new Date().getTime();
@@ -188,7 +188,7 @@
                      typecolor1: "primary",
                      isdisable: false,
                      isdisable1: false,*/
-                if(timestamp2<=timestamp4 & timestamp4<=timestamp3){
+                if(timestamp2<=timestamp4 && timestamp4<=timestamp3){
                     this.typecolor1 = 'primary';
                     this.isdisable1= false;
                 }else{
@@ -264,7 +264,7 @@
 
                     console.log( '打卡成功')
                     this.typecolor ="primary"
-                    this.isdisable = true
+                    this.isdisable1 = true
                 });
 
             }

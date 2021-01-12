@@ -60,7 +60,7 @@
         <el-dialog title="信息修改" v-model="dialogVisible" width="500px">
             <el-form ref="form" :model="form" label-width="80px">
                 <el-form-item label="编号">
-                    {{this.form.id}}"
+                    <el-input v-model="form.id" disabled></el-input>
                 </el-form-item>
                 <el-form-item label="姓名">
                     <el-input v-model="form.name"></el-input>
